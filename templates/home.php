@@ -10,6 +10,9 @@ extract($this->data);
         <title>Home</title>
     </head>
     <body>
+        <?php if (true === $session->exists('sbl.user.created')) : ?>
+            <span><?php echo $session->flash('sbl.user.created'); ?></span>
+        <?php endif; ?>
         <section>
             <div id="login">
                 <form id="login-form" name="login-form" action="/login" method="post">
