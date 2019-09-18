@@ -1,0 +1,20 @@
+{
+    "name": "vortrixs/slim-basic-login",
+    "type": "project",
+    "require": {
+        "slim/slim-skeleton": "^4.0",
+        "middlewares/trailing-slash": "^1.1.0",
+        "ext-pdo": "*"
+    },
+    "authors": [
+        {
+            "name": "Hans Erik Jepsen",
+            "email": "hanserikjepsen@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SBL\\": "src/"
+        }
+    }
+}
