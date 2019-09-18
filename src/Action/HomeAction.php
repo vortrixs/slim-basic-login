@@ -11,8 +11,15 @@ class HomeAction extends AbstractAction
 {
     public function __invoke(Request $request, Response $response, $args) : Response
     {
+        $user = null;
+
+        if (true === $this->session->exists('sbl.user.current')) {
+            $user = unserialize(base64_decode($this->session->get('sbl.user.current')));
+        }
+
         $templateData = [
             'session' => $this->session,
+            'user' => $user,
         ];
 
         $response->getBody()->write(
