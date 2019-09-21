@@ -4,6 +4,7 @@ namespace SBL\Action;
 
 use SBL\Library\AbstractAction;
 use SBL\Library\Crud;
+use SBL\Library\Traits\LoginRequired;
 use SBL\Model\UserModel;
 use SBL\View\ChangePasswordView;
 use Slim\Psr7\Request;
@@ -11,8 +12,14 @@ use Slim\Psr7\Response;
 
 class ChangePasswordAction extends AbstractAction
 {
+    use LoginRequired;
+
     public function __invoke(Request $request, Response $response, $args): Response
     {
+        if (false === $this->isLoggedIn()) {
+            return $response->withStatus(403)->withHeader('Location', '/');
+        }
+
         if ('GET' === $request->getMethod()) {
             $response = $this->get($response, $args);
         } elseif ('POST' === $request->getMethod()) {

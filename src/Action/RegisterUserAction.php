@@ -6,6 +6,7 @@ namespace SBL\Action;
 use SBL\Library\AbstractAction;
 use SBL\Library\Crud;
 use SBL\Library\SessionHelper;
+use SBL\Library\Traits\LoginRequired;
 use SBL\Model\UserModel;
 use SBL\View\SignupView;
 use Slim\Psr7\Request;
@@ -13,10 +14,16 @@ use Slim\Psr7\Response;
 
 class RegisterUserAction extends AbstractAction
 {
-    public $error = [];
+    use LoginRequired;
+
+    private $error = [];
 
     public function __invoke(Request $request, Response $response, $args): Response
     {
+        if (true === $this->isLoggedIn()) {
+            return $response->withStatus(403)->withHeader('Location', '/');
+        }
+
         $data = $request->getParsedBody();
 
         if (false === $this->validate($data)) {

@@ -34,17 +34,15 @@
                     </td>
 
                     <td>
-                        <?php if (true === $data['isAdmin']) : ?>
-                            <form action="/user/<?php echo $data['username']; ?>/removeadmin" method="post">
+                        <form action="/user/<?php echo $data['username']; ?>/changeaccess" method="post">
+                            <?php if (true === $data['isAdmin']) : ?>
                                 <input type="hidden" name="access" value="0">
                                 <button type="submit">Remove admin access</button>
-                            </form>
-                        <?php else : ?>
-                            <form action="/user/<?php echo $data['username']; ?>/makeadmin" method="post">
+                            <?php else : ?>
                                 <input type="hidden" name="access" value="1">
                                 <button type="submit">Grant admin access</button>
-                            </form>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                        </form>
                     </td>
                 <?php endif; ?>
             </tr>
