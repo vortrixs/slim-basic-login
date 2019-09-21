@@ -1,5 +1,6 @@
 <?php
 
+use SBL\Action\ChangePasswordAction;
 use SBL\Action\HomeAction;
 use SBL\Action\LoginAction;
 use SBL\Action\LogoutAction;
@@ -15,4 +16,8 @@ $app->post('/logout', LogoutAction::class);
 $app->get('/signup', SignupAction::class);
 
 $app->post('/signup', RegisterUserAction::class);
+
+$app->get('/user/{username}/changepassword', ChangePasswordAction::class);
+
+$app->post('/user/{username}/changepassword', ChangePasswordAction::class);
 

@@ -1,33 +1,36 @@
 <?php
 /**
- * @var array<string>|null    $user
- * @var SBL\Model\UserModel[] $users
+ * @var array<string,int|string|bool> $user
+ * @var SBL\Model\UserModel[]         $users
  */
-
-if (false === array_key_exists('users', get_defined_vars())) {
-    throw new RuntimeException('$users needs to be initialized as a collection of SBL\Model\UserModel instances');
-}
-
-var_dump($user);
-
 ?>
 
-<table>
-    <tr>
-        <th>Username</th>
-        <th>Change password</th>
-        <?php if (true === $user['isAdmin']) : ?>
-            <th>Delete user</th>
-        <?php endif; ?>
-    </tr>
-    <?php foreach ($users as $listUser) : ?>
-        <?php $data = $listUser->getData(); ?>
+<table id="user-list">
+    <thead>
         <tr>
-            <td><?php echo $data['username']; ?></td>
-            <td><a href="/user/<?php echo $data['username']; ?>/changepassword">Change</a></td>
+            <th>User</th>
+            <th>Change password</th>
             <?php if (true === $user['isAdmin']) : ?>
-                <td><a href="/user/<?php echo $data['username']; ?>/delete">Delete</a></td>
+                <th>Delete user</th>
+                <th>Admin access</th>
             <?php endif; ?>
         </tr>
-    <?php endforeach; ?>
+    </thead>
+    <tbody>
+        <?php foreach ($users as $listUser) : ?>
+            <?php $data = $listUser->getData(); ?>
+            <tr>
+                <td><?php echo $data['username']; ?></td>
+
+                <?php if (true === $user['isAdmin'] || $data['username'] === $user['username']) : ?>
+                    <td><a href="/user/<?php echo $data['username']; ?>/changepassword">Change</a></td>
+                <?php endif; ?>
+
+                <?php if (true === $user['isAdmin'] && $data['username'] !== $user['username']) : ?>
+                    <td>Delete</td>
+                    <td>Make/remove admin</td>
+                <?php endif; ?>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
 </table>
