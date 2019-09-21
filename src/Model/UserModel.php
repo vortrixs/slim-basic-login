@@ -33,7 +33,7 @@ class UserModel extends AbstractModel
         return $this;
     }
 
-    public function getUser(string $username, string $password) : UserModel
+    public function getUser(string $username) : UserModel
     {
         $data = $this->crud->read('*', [['WHERE', 'username', '=', $username]], 1);
 
@@ -62,6 +62,7 @@ class UserModel extends AbstractModel
         return [
             'id' => $this->id,
             'username' => $this->username,
+            'password' => $this->password,
             'isAdmin' => $this->isAdmin,
         ];
     }
