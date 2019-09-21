@@ -51,14 +51,13 @@ class Crud
     /**
      * Read rows from the table
      *
-     * @param  array         $columns A list of columns to fetch
-     * @param  array|string  $where   Multi-dimensional array or a SQL string for complex restrictions
-     *                                Refer to the readme for examples
-     * @param  integer       $limit   How many rows to fetch
+     * @param  array   $columns A list of columns to fetch
+     * @param  array   $where   Multi-dimensional array
+     * @param  integer $limit   How many rows to fetch
      *
      * @return array|false
      */
-    public function read(array $columns = ['*'], $where = [], int $limit = 0)
+    public function read(array $columns = ['*'], array $where = [], int $limit = 0)
     {
         $sql = $this->db->prepareRead($this->table, $columns, $where, $limit);
 
@@ -76,13 +75,12 @@ class Crud
     /**
      * Updates specified columns in the table
      *
-     * @param  array        $data  The data that is being updated, formatted as array(columnName => newValue)
-     * @param  array|string $where Multi-dimensional array or a SQL string for complex restrictions
-     *                             Refer to the readme for examples
+     * @param  array $data  The data that is being updated, formatted as array(columnName => newValue)
+     * @param  array $where Multi-dimensional array
      *
      * @return integer
      */
-    public function update(array $data, $where) : int
+    public function update(array $data, array $where) : int
     {
         $sql = $this->db->prepareUpdate($this->table, $data, $where);
 
@@ -96,8 +94,7 @@ class Crud
     /**
      * Deletes rows from the table
      *
-     * @param  array|string  $where Multi-dimensional array or a SQL string for complex restrictions
-     *                              Refer to the readme for examples
+     * @param  array $where Multi-dimensional array
      *
      * @return boolean
      */
@@ -115,7 +112,7 @@ class Crud
     /**
      * Manually execute a SQL query
      *
-     * @param  string $query [description]
+     * @param  string $query Executes a SQL string
      * @return array
      */
     public function execute(string $query) : array

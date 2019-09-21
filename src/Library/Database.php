@@ -22,17 +22,17 @@ class Database
      * @param string $host    Database host. Defaults to 127.0.0.1 (localhost)
      * @param array  $options PDO Driver options {@see http://php.net/manual/en/ref.pdo-mysql.php}
      */
-    public function __construct($db, $user, $passwd, $host = '127.0.0.1', $options = [])
+    public function __construct(string $db, string $user, string $passwd, string $host = '127.0.0.1', array $options = [])
     {
         $this->connection = new \PDO("mysql:dbname={$db};host={$host}", $user, $passwd, $options);
     }
 
-    public function getConnection()
+    public function getConnection() : \PDO
     {
         return $this->connection;
     }
 
-    public function prepareInsert($table, $data)
+    public function prepareInsert(string $table, array $data)
     {
         $columns      = array_keys($data);
         $values       = array_values($data);
@@ -50,21 +50,14 @@ class Database
         return $statement;
     }
 
-    public function prepareRead($table, $columns, $where, $limit = 0)
+    public function prepareRead(string $table, array $columns, array $where, int $limit = 0)
     {
-        if (is_array($columns)) {
-            $columns = implode(',', $columns);
-        }
-
-        $query = "SELECT {$columns} FROM {$table}";
+        $columns = implode(',', $columns);
 
         $placeholders = [];
 
-        if (!empty($where)) {
-            $query .= is_array($where)
-                ? $this->processWhere($where, $placeholders)
-                : " {$where}";
-        }
+        $query  = "SELECT {$columns} FROM {$table}";
+        $query .= $this->processWhere($where, $placeholders);
 
         if ($limit > 0) {
             $query .= " LIMIT {$limit}";
@@ -81,7 +74,7 @@ class Database
         return $statement;
     }
 
-    public function prepareUpdate($table, $data, $where)
+    public function prepareUpdate(string $table, array $data, array $where)
     {
         $placeholders = $this->generatePlaceholders(array_keys($data));
         $pColumns     = array_combine($placeholders, array_keys($data));
@@ -93,15 +86,9 @@ class Database
             $set .= "{$column} = {$placeholder},";
         }
 
-        $set = rtrim($set, ',');
-
-        $query = "UPDATE {$table} SET {$set}";
-
-        if (!empty($where)) {
-            $query .= is_array($where)
-                ? $this->processWhere($where, $pValues)
-                : " {$where}";
-        }
+        $set    = rtrim($set, ',');
+        $query  = "UPDATE {$table} SET {$set}";
+        $query .= $this->processWhere($where, $pValues);
 
         $statement = $this->connection->prepare($query);
 
@@ -114,16 +101,12 @@ class Database
         return $statement;
     }
 
-    public function prepareDelete($table, $where)
+    public function prepareDelete(string $table, array $where)
     {
-        $query = "DELETE FROM {$table}";
         $placeholders = [];
 
-        if (!empty($where)) {
-            $query .= is_array($where)
-                ? $this->processWhere($where, $placeholders)
-                : " {$where}";
-        }
+        $query  = "DELETE FROM {$table}";
+        $query .= $this->processWhere($where, $placeholders);
 
         $statement = $this->connection->prepare($query);
 
@@ -136,7 +119,7 @@ class Database
         return $statement;
     }
 
-    private function generatePlaceholders($columns)
+    private function generatePlaceholders(array $columns) : array
     {
         foreach ($columns as &$column) {
             $column = ":{$column}";
@@ -145,7 +128,7 @@ class Database
         return $columns;
     }
 
-    private function processWhere($where, &$placeholders)
+    private function processWhere(array $where, array &$placeholders) : string
     {
         $string = '';
 
