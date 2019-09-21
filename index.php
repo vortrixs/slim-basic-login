@@ -9,9 +9,11 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 session_start();
 
+$config = parse_ini_file(__DIR__ . '/config.ini');
+
 $container = new Container;
 
-$container->set('database', new Database('slim', 'slim', 'slim'));
+$container->set('database', new Database($config['DB'], $config['USER'], $config['PASSWD'], $config['HOST']));
 
 AppFactory::setContainer($container);
 

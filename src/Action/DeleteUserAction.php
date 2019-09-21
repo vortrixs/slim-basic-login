@@ -2,7 +2,6 @@
 
 namespace SBL\Action;
 
-use App\Domain\User\User;
 use SBL\Library\AbstractAction;
 use SBL\Library\Crud;
 use SBL\Library\Traits\LoginRequired;
