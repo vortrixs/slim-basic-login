@@ -1,7 +1,7 @@
 <?php
 /**
- * @var SBL\Library\SessionHelper $session
- * @var array<string>|null        $user
+ * @var SBL\Library\SessionHelper          $session
+ * @var array<string,int|string|bool>|null $user
  */
 
 extract($this->data);

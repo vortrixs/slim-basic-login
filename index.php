@@ -11,9 +11,9 @@ session_start();
 
 $container = new Container;
 
-AppFactory::setContainer($container);
-
 $container->set('database', new Database('slim', 'slim', 'slim'));
+
+AppFactory::setContainer($container);
 
 $app = AppFactory::create();
 

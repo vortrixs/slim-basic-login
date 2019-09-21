@@ -1,11 +1,7 @@
 <?php
 /**
- * * @var array<string>|null $user
+ * * @var array<string,int|string|bool> $user
  */
-
-if (false === array_key_exists('user', get_defined_vars())) {
-    throw new RuntimeException('$user needs to be initialized as an instance of SBL\Model\UserModel');
-}
 ?>
 
 <?php if (null === $user) : ?>

@@ -20,8 +20,8 @@ class HomeAction extends AbstractAction
         }
 
         $templateData = [
-        'session' => $this->session,
-        'user' => $user,
+            'session' => $this->session,
+            'user'    => $user,
         ];
 
         if (null !== $user) {
