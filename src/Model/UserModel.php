@@ -27,7 +27,6 @@ class UserModel extends AbstractModel
 
         $this->username   = $username;
         $this->password   = $passwordHashed;
-        $this->isLoggedIn = false;
         $this->isAdmin    = false;
 
         return $this;
@@ -37,22 +36,10 @@ class UserModel extends AbstractModel
     {
         $data = $this->crud->read('*', [['WHERE', 'username', '=', $username]], 1);
 
-        $this->id       = $data['id'];
+        $this->id       = (int) $data['id'];
         $this->username = $data['username'];
         $this->password = $data['password'];
-        $this->isAdmin  = $data['is_admin'];
-
-        return $this;
-    }
-
-    public function getUserById(int $id) : UserModel
-    {
-        $data = $this->crud->read('*', [['WHERE', 'id', '=', $id]]);
-
-        $this->id       = $data['id'];
-        $this->username = $data['username'];
-        $this->password = $data['password'];
-        $this->isAdmin  = $data['is_admin'];
+        $this->isAdmin  = (bool) $data['is_admin'];
 
         return $this;
     }
@@ -60,10 +47,21 @@ class UserModel extends AbstractModel
     public function getData() : array
     {
         return [
-            'id' => $this->id,
+            'id'       => $this->id,
             'username' => $this->username,
             'password' => $this->password,
-            'isAdmin' => $this->isAdmin,
+            'isAdmin'  => $this->isAdmin,
         ];
+    }
+
+    public function getAll() : \Generator
+    {
+        $data = $this->crud->read('username');
+
+        foreach ($data as $row) {
+            $clone = clone $this;
+
+            yield $clone->getUser($row['username']);
+        }
     }
 }
