@@ -15,6 +15,9 @@ extract($this->data);
         <?php if (true === $session->exists('sbl.user.created')) : ?>
             <span><?php echo $session->flash('sbl.user.created'); ?></span>
         <?php endif; ?>
+        <?php if (true === $session->exists('sbl.user.update.success')) : ?>
+            <span><?php echo $session->flash('sbl.user.update.success'); ?></span>
+        <?php endif; ?>
         <?php if (true === $session->exists('sbl.user.login.msg')) : ?>
             <span><?php echo $session->flash('sbl.user.login.msg'); ?></span>
         <?php endif; ?>

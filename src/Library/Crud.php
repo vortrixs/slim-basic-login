@@ -24,7 +24,7 @@ class Crud
      * @param Database $db    Database object containing the PDO connection
      * @param string   $table Database table we are going to access
      */
-    public function __construct(Database $db, $table)
+    public function __construct(Database $db, string $table)
     {
         $this->db    = $db;
         $this->table = $table;
@@ -35,9 +35,9 @@ class Crud
      *
      * @param  array<string,string|int|float|boolean> $data Data to insert formatted as array(columnName => value)
      *
-     * @return integer
+     * @return string
      */
-    public function create($data)
+    public function create(array $data) : string
     {
         $sql = $this->db->prepareInsert($this->table, $data);
 
@@ -56,9 +56,9 @@ class Crud
      *                                Refer to the readme for examples
      * @param  integer       $limit   How many rows to fetch
      *
-     * @return array
+     * @return array|false
      */
-    public function read($columns = ['*'], $where = [], $limit = 0)
+    public function read(array $columns = ['*'], $where = [], int $limit = 0)
     {
         $sql = $this->db->prepareRead($this->table, $columns, $where, $limit);
 
@@ -82,7 +82,7 @@ class Crud
      *
      * @return integer
      */
-    public function update($data, $where)
+    public function update(array $data, $where) : int
     {
         $sql = $this->db->prepareUpdate($this->table, $data, $where);
 
@@ -101,7 +101,7 @@ class Crud
      *
      * @return boolean
      */
-    public function delete($where = [])
+    public function delete($where = []) : bool
     {
         $sql = $this->db->prepareDelete($this->table, $where);
 
@@ -118,7 +118,7 @@ class Crud
      * @param  string $query [description]
      * @return array
      */
-    public function execute($query)
+    public function execute(string $query) : array
     {
         $sql = $this->db->getConnection()->query($query);
 
@@ -135,7 +135,7 @@ class Crud
      * @param array  $sqlError
      * @param string $code
      */
-    private function fail(array $sqlError, string $code)
+    private function fail(array $sqlError, string $code) : void
     {
         throw new \RuntimeException(end($sqlError), (int) $code);
     }

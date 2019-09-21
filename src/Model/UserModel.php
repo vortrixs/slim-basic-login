@@ -34,7 +34,11 @@ class UserModel extends AbstractModel
 
     public function getUser(string $username) : UserModel
     {
-        $data = $this->crud->read('*', [['WHERE', 'username', '=', $username]], 1);
+        $data = $this->crud->read(['*'], [['WHERE', 'username', '=', $username]], 1);
+
+        if (false === $data) {
+            return $this;
+        }
 
         $this->id       = (int) $data['id'];
         $this->username = $data['username'];
@@ -56,12 +60,19 @@ class UserModel extends AbstractModel
 
     public function getAll() : \Generator
     {
-        $data = $this->crud->read('username');
+        $data = $this->crud->read(['username']);
 
         foreach ($data as $row) {
             $clone = clone $this;
 
             yield $clone->getUser($row['username']);
         }
+    }
+
+    public function changePassword(string $username, string $newPassword) : int
+    {
+        $passwordHashed = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        return $this->crud->update(['password' => $passwordHashed], [['WHERE', 'username', '=', $username]]);
     }
 }
