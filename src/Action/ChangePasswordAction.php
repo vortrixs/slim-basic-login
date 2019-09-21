@@ -44,7 +44,7 @@ class ChangePasswordAction extends AbstractAction
 
         $model = new UserModel(new Crud($this->container->get('database'), 'users'));
 
-        if (0 === $model->changePassword($args['username'], $data['password'])) {
+        if (0 === $model->getUser($args['username'])->changePassword($data['password'])) {
             $this->session->set(
                 'sbl.user.update.failed',
                 'Password could not be changed, try again or contact an administrator'

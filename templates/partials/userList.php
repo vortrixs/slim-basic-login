@@ -23,12 +23,29 @@
                 <td><?php echo $data['username']; ?></td>
 
                 <?php if (true === $user['isAdmin'] || $data['username'] === $user['username']) : ?>
-                    <td><a href="/user/<?php echo $data['username']; ?>/changepassword">Change</a></td>
+                    <td><a href="/user/<?php echo $data['username']; ?>/changepassword"><button>Change</button></a></td>
                 <?php endif; ?>
 
                 <?php if (true === $user['isAdmin'] && $data['username'] !== $user['username']) : ?>
-                    <td>Delete</td>
-                    <td>Make/remove admin</td>
+                    <td>
+                        <form action="/user/<?php echo $data['username']; ?>/delete" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <?php if (true === $data['isAdmin']) : ?>
+                            <form action="/user/<?php echo $data['username']; ?>/removeadmin" method="post">
+                                <input type="hidden" name="access" value="0">
+                                <button type="submit">Remove admin access</button>
+                            </form>
+                        <?php else : ?>
+                            <form action="/user/<?php echo $data['username']; ?>/makeadmin" method="post">
+                                <input type="hidden" name="access" value="1">
+                                <button type="submit">Grant admin access</button>
+                            </form>
+                        <?php endif; ?>
+                    </td>
                 <?php endif; ?>
             </tr>
         <?php endforeach; ?>

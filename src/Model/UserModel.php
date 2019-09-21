@@ -69,10 +69,16 @@ class UserModel extends AbstractModel
         }
     }
 
-    public function changePassword(string $username, string $newPassword) : int
+    public function changePassword(string $newPassword) : int
     {
-        $passwordHashed = password_hash($newPassword, PASSWORD_DEFAULT);
+        return $this->crud->update(
+            ['password' => password_hash($newPassword, PASSWORD_DEFAULT)],
+            [['WHERE', 'username', '=', $this->username]]
+        );
+    }
 
-        return $this->crud->update(['password' => $passwordHashed], [['WHERE', 'username', '=', $username]]);
+    public function changeAdminAccess(int $access)
+    {
+        return $this->crud->update(['is_admin' => $access], [['WHERE', 'username', '=', $this->username]]);
     }
 }

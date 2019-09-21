@@ -1,5 +1,6 @@
 <?php
 
+use SBL\Action\ChangeAdminAccessAction;
 use SBL\Action\ChangePasswordAction;
 use SBL\Action\HomeAction;
 use SBL\Action\LoginAction;
@@ -21,3 +22,6 @@ $app->get('/user/{username}/changepassword', ChangePasswordAction::class);
 
 $app->post('/user/{username}/changepassword', ChangePasswordAction::class);
 
+$app->post('/user/{username}/makeadmin', ChangeAdminAccessAction::class);
+
+$app->post('/user/{username}/removeadmin', ChangeAdminAccessAction::class);
