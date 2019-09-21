@@ -10,6 +10,8 @@ abstract class AbstractAction
 {
     protected $container;
 
+    protected $session;
+
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;

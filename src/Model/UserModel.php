@@ -77,8 +77,13 @@ class UserModel extends AbstractModel
         );
     }
 
-    public function changeAdminAccess(int $access)
+    public function changeAdminAccess(int $access) : int
     {
         return $this->crud->update(['is_admin' => $access], [['WHERE', 'username', '=', $this->username]]);
+    }
+
+    public function deleteUser() : bool
+    {
+        return $this->crud->delete([['WHERE', 'username', '=', $this->username]]);
     }
 }
