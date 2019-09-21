@@ -42,7 +42,7 @@ class Crud
         $sql = $this->db->prepareInsert($this->table, $data);
 
         if (false === $sql->execute()) {
-            throw new \RuntimeException($sql->errorInfo(), $sql->errorCode());
+            $this->fail($sql->errorInfo(), $sql->errorCode());
         }
 
         return $this->db->getConnection()->lastInsertId();
@@ -63,7 +63,7 @@ class Crud
         $sql = $this->db->prepareRead($this->table, $columns, $where, $limit);
 
         if (false === $sql->execute()) {
-            throw new \RuntimeException($sql->errorInfo(), $sql->errorCode());
+            $this->fail($sql->errorInfo(), $sql->errorCode());
         }
 
         if (1 === $limit) {
@@ -87,7 +87,7 @@ class Crud
         $sql = $this->db->prepareUpdate($this->table, $data, $where);
 
         if (false === $sql->execute()) {
-            throw new \RuntimeException($sql->errorInfo(), $sql->errorCode());
+            $this->fail($sql->errorInfo(), $sql->errorCode());
         }
 
         return $sql->rowCount();
@@ -106,7 +106,7 @@ class Crud
         $sql = $this->db->prepareDelete($this->table, $where);
 
         if (false === $sql->execute()) {
-            throw new \RuntimeException($sql->errorInfo(), $sql->errorCode());
+            $this->fail($sql->errorInfo(), $sql->errorCode());
         }
 
         return true;
@@ -123,9 +123,20 @@ class Crud
         $sql = $this->db->getConnection()->query($query);
 
         if (false === $sql || false === $sql->execute()) {
-            throw new \RuntimeException($sql->errorInfo(), $sql->errorCode());
+            $this->fail($sql->errorInfo(), $sql->errorCode());
         }
 
         return $sql->fetchAll();
+    }
+
+    /**
+     * Simple wrapper for throwing exceptions
+     *
+     * @param array  $sqlError
+     * @param string $code
+     */
+    private function fail(array $sqlError, string $code)
+    {
+        throw new \RuntimeException(end($sqlError), (int) $code);
     }
 }
