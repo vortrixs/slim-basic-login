@@ -1,7 +1,7 @@
 <?php
 /**
  * @var SBL\Library\SessionHelper $session
- * @var SBL\Model\UserModel       $user
+ * @var array<string>|null        $user
  */
 
 extract($this->data);
@@ -11,6 +11,7 @@ extract($this->data);
         <title>Home</title>
     </head>
     <body>
+    <section>
         <?php if (true === $session->exists('sbl.user.created')) : ?>
             <span><?php echo $session->flash('sbl.user.created'); ?></span>
         <?php endif; ?>
@@ -18,29 +19,13 @@ extract($this->data);
             <span><?php echo $session->flash('sbl.user.login.msg'); ?></span>
         <?php endif; ?>
 
-        <?php if (null === $user) : ?>
-        <section>
-            <div id="login">
-                <form id="login-form" name="login-form" action="/login" method="post">
-                    <label for="login-form-username">Username</label>
-                    <input id="login-form-username" type="text" name="username">
+        <?php
+        include_once __DIR__ . '/partials/loginForm.php';
 
-                    <label for="login-form-password">Password</label>
-                    <input id="login-form-password" type="password" name="password">
-
-                    <button type="submit">Login</button>
-                </form>
-
-                <a href="/signup">Sign up</a>
-            </div>
-        </section>
-        <?php else : ?>
-            <?php if (true === is_array($user)) : ?>
-                <span>You are logged in as: <?php echo $user['username']; ?></span>
-            <?php endif; ?>
-        <section>
-            <form action="/logout" method="post"><button type="submit">Logout</button></form>
-        </section>
-        <?php endif; ?>
+        if (null !== $user) {
+            include_once __DIR__ . '/partials/userList.php';
+        }
+        ?>
+    </section>
     </body>
 </html>
