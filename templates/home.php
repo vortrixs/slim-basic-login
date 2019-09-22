@@ -9,26 +9,59 @@ extract($this->data);
 <html lang="en">
     <head>
         <title>Home</title>
+        <link
+                rel="stylesheet"
+                href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                crossorigin="anonymous"
+        >
     </head>
     <body>
-    <section>
-        <?php if (true === $session->exists('sbl.user.created')) : ?>
-            <span><?php echo $session->flash('sbl.user.created'); ?></span>
-        <?php endif; ?>
-        <?php if (true === $session->exists('sbl.user.update.success')) : ?>
-            <span><?php echo $session->flash('sbl.user.update.success'); ?></span>
-        <?php endif; ?>
-        <?php if (true === $session->exists('sbl.user.login.msg')) : ?>
-            <span><?php echo $session->flash('sbl.user.login.msg'); ?></span>
-        <?php endif; ?>
+        <section class="container h-75">
+            <div class="row h-75 justify-content-center align-items-center">
+                <?php if (null === $user) : ?>
+                    <div class="col-6">
+                        <?php if (true === $session->exists('sbl.user.created')) : ?>
+                            <div class="alert alert-success"><?php echo $session->flash('sbl.user.created'); ?></div>
+                        <?php endif; ?>
 
-        <?php
-        include_once __DIR__ . '/partials/loginForm.php';
+                        <?php if (true === $session->exists('sbl.user.login.msg')) : ?>
+                            <div class="alert alert-primary"><?php echo $session->flash('sbl.user.login.msg'); ?></div>
+                        <?php endif; ?>
 
-        if (null !== $user) {
-            include_once __DIR__ . '/partials/userList.php';
-        }
-        ?>
-    </section>
+                        <?php include_once __DIR__ . '/partials/login.php'; ?>
+                    </div>
+                <?php else : ?>
+                    <div class="col">
+                        <?php if (true === $session->exists('sbl.user.update.success')) : ?>
+                            <div class="alert alert-success">
+                                <?php echo $session->flash('sbl.user.update.success'); ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (true === $session->exists('sbl.user.login.msg')) : ?>
+                            <div class="alert alert-primary"><?php echo $session->flash('sbl.user.login.msg'); ?></div>
+                        <?php endif; ?>
+
+                        <?php include_once __DIR__ . '/partials/logout.php'; ?>
+                        <?php include_once __DIR__ . '/partials/userList.php'; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </section>
+        <script
+                src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"
+        ></script>
+        <script
+                src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"
+        ></script>
+        <script
+                src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"
+        ></script>
     </body>
 </html>
