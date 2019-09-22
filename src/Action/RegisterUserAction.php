@@ -5,7 +5,6 @@ namespace SBL\Action;
 
 use SBL\Library\AbstractAction;
 use SBL\Library\Crud;
-use SBL\Library\SessionHelper;
 use SBL\Model\UserModel;
 use SBL\View\SignupView;
 use Slim\Psr7\Request;
@@ -16,7 +15,7 @@ class RegisterUserAction extends AbstractAction
     /**
      * @var array
      */
-    private $error = [];
+    private $errors = [];
 
     /**
      * @param Request  $request
@@ -35,7 +34,7 @@ class RegisterUserAction extends AbstractAction
 
         if (false === $this->validate($data)) {
             $response->getBody()->write(
-                $this->view(SignupView::class)->render('signup', $this->error)
+                $this->view(SignupView::class)->render('signup', ['errors' => $this->errors, 'old' => $data])
             );
 
             return $response;
@@ -52,10 +51,10 @@ class RegisterUserAction extends AbstractAction
         );
 
         if (false === $user) {
-            $this->error = ['username' => "A user with the name {$data['username']} already exists."];
+            $this->errors = ['username' => "A user with the name {$data['username']} already exists."];
 
             $response->getBody()->write(
-                $this->view(SignupView::class)->render('signup', $this->error)
+                $this->view(SignupView::class)->render('signup', $this->errors)
             );
 
             return $response;
@@ -76,18 +75,18 @@ class RegisterUserAction extends AbstractAction
     private function validate(array $data = []) : bool
     {
         if (empty($data['username'])) {
-            $this->error['username'] = 'Username is required.';
+            $this->errors['username'] = 'Username is required.';
         }
 
         if (empty($data['password'])) {
-            $this->error['password'] = 'Password is required.';
+            $this->errors['password'] = 'Password is required.';
         }
 
         if ($data['password'] !== $data['password2']) {
-            $this->error['password2'] = 'Password and Repeat password must match each other.';
+            $this->errors['password2'] = 'Password and Repeat password must match each other.';
         }
 
-        return empty($this->error);
+        return empty($this->errors);
     }
 
     /**
