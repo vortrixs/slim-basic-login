@@ -1,0 +1,17 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # Specify the version you desire here
+      - image: circleci/php:7.2-node-browsers
+
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo composer self-update
+      - run: composer global require "squizlabs/php_codesniffer=*"
+      - run: ~/.composer/vendor/bin/phpcs --standard=PSR2 --runtime-set ignore_warnings_on_exit true -p ~/project/
