@@ -1,0 +1,3 @@
+DSN="sqlite:/home/slim/public_html/resources/sbl.db"
+USER=null
+PASSWD=null

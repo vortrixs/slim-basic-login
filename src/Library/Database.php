@@ -16,15 +16,14 @@ class Database
     /**
      * Creates a connection to a MySQL database
      *
-     * @param string $db      Name of the database to connect to
+     * @param string $dsn     The driver, database and host to connect to
      * @param string $user    Username
      * @param string $passwd  Password
-     * @param string $host    Database host. Defaults to 127.0.0.1 (localhost)
      * @param array  $options PDO Driver options {@see http://php.net/manual/en/ref.pdo-mysql.php}
      */
-    public function __construct(string $db, string $user, string $passwd, string $host = '127.0.0.1', array $options = [])
+    public function __construct(string $dsn, string $user, string $passwd, array $options = [])
     {
-        $this->connection = new \PDO("mysql:dbname={$db};host={$host}", $user, $passwd, $options);
+        $this->connection = new \PDO($dsn, $user, $passwd, $options);
     }
 
     /**

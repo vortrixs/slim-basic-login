@@ -13,7 +13,7 @@ $config = parse_ini_file(__DIR__ . '/config.ini');
 
 $container = new Container;
 
-$container->set('database', new Database($config['DB'], $config['USER'], $config['PASSWD'], $config['HOST']));
+$container->set('database', new Database($config['DSN'], $config['USER'], $config['PASSWD']));
 
 AppFactory::setContainer($container);
 
