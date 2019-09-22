@@ -25,6 +25,9 @@ This is a simple application that includes the following features:
 
 The application uses the Slim 4 Framework as a lightweight base to expand from and the structure is loosely based on the MVC design pattern, but since it's a fairly small app I've decided to simplify it a bit by using Slims "Actions" instead of Controllers.
 
+# Demo
+A demo can be found on http://sbl.he-jepsen.dk/ running on PHP 7.3.9 and SQLite 3
+
 ## Pre-made admin user
 - Username: admin
 - Password: admin
