@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.27, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: slim
+-- Host: 127.0.0.1    Database: 
 -- ------------------------------------------------------
 -- Server version	5.7.27-0ubuntu0.18.04.1
 
@@ -16,6 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `slim`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `slim` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `slim`;
+
+--
 -- Table structure for table `users`
 --
 
@@ -29,7 +37,7 @@ CREATE TABLE `users` (
   `is_admin` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +46,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'username2','$2y$10$zAK5O40/j128ubN81lkVkOJfgSyOicbBu56h.mLnr0SOJGWSO8MTq',0),(3,'vortrixs','$2y$10$G2BRXahux5NBlWTCnU6JweG7izB6cGHQuyXGSHAl5ojDmyBVHQPPG',0),(4,'someuser','$2y$10$KZfoc2tX6yyYxyNX1B3S1eavCTtBP/VqW.qm0XjjlMouplO/vw7.u',0),(6,'admin','$2y$10$A7cy4XAz.ZJW4pvmTMJn3uQVRHdKsp5IgHbPzdQB0v4nEA3v0T/sy',1);
+INSERT INTO `users` VALUES (2,'username2','$2y$10$zAK5O40/j128ubN81lkVkOJfgSyOicbBu56h.mLnr0SOJGWSO8MTq',0),(3,'vortrixs','$2y$10$G2BRXahux5NBlWTCnU6JweG7izB6cGHQuyXGSHAl5ojDmyBVHQPPG',0),(4,'someuser','$2y$10$KZfoc2tX6yyYxyNX1B3S1eavCTtBP/VqW.qm0XjjlMouplO/vw7.u',0),(6,'admin','$2y$10$MrCupnioZzwI0hZ4wWuApOGcUsv0DISGhLe2m0IyIOH7u6i90xDsO',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-21 17:50:12
+-- Dump completed on 2019-09-22 15:46:27
