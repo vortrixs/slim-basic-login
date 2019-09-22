@@ -27,11 +27,20 @@ class Database
         $this->connection = new \PDO("mysql:dbname={$db};host={$host}", $user, $passwd, $options);
     }
 
+    /**
+     * @return \PDO
+     */
     public function getConnection() : \PDO
     {
         return $this->connection;
     }
 
+    /**
+     * @param string $table
+     * @param array  $data
+     *
+     * @return boolean|\PDOStatement
+     */
     public function prepareInsert(string $table, array $data)
     {
         $columns      = array_keys($data);
@@ -50,6 +59,14 @@ class Database
         return $statement;
     }
 
+    /**
+     * @param string  $table
+     * @param array   $columns
+     * @param array   $where
+     * @param integer $limit
+     *
+     * @return boolean|\PDOStatement
+     */
     public function prepareRead(string $table, array $columns, array $where, int $limit = 0)
     {
         $columns = implode(',', $columns);
@@ -74,6 +91,13 @@ class Database
         return $statement;
     }
 
+    /**
+     * @param string $table
+     * @param array  $data
+     * @param array  $where
+     *
+     * @return boolean|\PDOStatement
+     */
     public function prepareUpdate(string $table, array $data, array $where)
     {
         $placeholders = $this->generatePlaceholders(array_keys($data));
@@ -101,6 +125,12 @@ class Database
         return $statement;
     }
 
+    /**
+     * @param string $table
+     * @param array  $where
+     *
+     * @return boolean|\PDOStatement
+     */
     public function prepareDelete(string $table, array $where)
     {
         $placeholders = [];
@@ -119,6 +149,11 @@ class Database
         return $statement;
     }
 
+    /**
+     * @param array $columns
+     *
+     * @return array
+     */
     private function generatePlaceholders(array $columns) : array
     {
         foreach ($columns as &$column) {
@@ -128,6 +163,12 @@ class Database
         return $columns;
     }
 
+    /**
+     * @param array $where
+     * @param array $placeholders
+     *
+     * @return string
+     */
     private function processWhere(array $where, array &$placeholders) : string
     {
         $string = '';

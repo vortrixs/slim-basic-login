@@ -11,7 +11,14 @@ use Slim\Psr7\Response;
 
 class HomeAction extends AbstractAction
 {
-    public function __invoke(Request $request, Response $response, $args) : Response
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
+     *
+     * @return Response
+     */
+    public function __invoke(Request $request, Response $response, array $args) : Response
     {
         $user = null;
 
@@ -35,7 +42,10 @@ class HomeAction extends AbstractAction
         return $response;
     }
 
-    private function getUsersCollection()
+    /**
+     * @return \Iterator
+     */
+    private function getUsersCollection() : \Iterator
     {
         return (new UserModel(new Crud($this->container->get('database'), 'users')))->getAll();
     }

@@ -13,9 +13,19 @@ use Slim\Psr7\Response;
 
 class RegisterUserAction extends AbstractAction
 {
+    /**
+     * @var array
+     */
     private $error = [];
 
-    public function __invoke(Request $request, Response $response, $args): Response
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
+     *
+     * @return Response
+     */
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         if (true === $this->isLoggedIn()) {
             return $response->withStatus(403)->withHeader('Location', '/');
@@ -53,11 +63,16 @@ class RegisterUserAction extends AbstractAction
 
         $userData = $user->getData();
 
-        (new SessionHelper)->set('sbl.user.created', "User {$userData['username']} was successfully created.");
+        $this->session->set('sbl.user.created', "User {$userData['username']} was successfully created.");
 
         return $response->withStatus(302)->withHeader('Location', '/');
     }
 
+    /**
+     * @param array $data
+     *
+     * @return boolean
+     */
     private function validate(array $data = []) : bool
     {
         if (empty($data['username'])) {
@@ -75,6 +90,12 @@ class RegisterUserAction extends AbstractAction
         return empty($this->error);
     }
 
+    /**
+     * @param UserModel $model
+     * @param array     $data
+     *
+     * @return boolean|UserModel
+     */
     private function createUser(UserModel $model, array $data)
     {
         return $model->createUser($data['username'], $data['password']);

@@ -8,7 +8,14 @@ use Slim\Psr7\Response;
 
 class LogoutAction extends AbstractAction
 {
-    public function __invoke(Request $request, Response $response, $args): Response
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
+     *
+     * @return Response
+     */
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->session->delete('sbl.user.current');
 

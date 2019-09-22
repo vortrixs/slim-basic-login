@@ -11,6 +11,9 @@ trait LoginRequired
      */
     protected $session;
 
+    /**
+     * @return boolean
+     */
     protected function isLoggedIn()
     {
         if (false === $this->session->exists('sbl.user.current')) {

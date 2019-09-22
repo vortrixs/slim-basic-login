@@ -11,7 +11,14 @@ use Slim\Psr7\Response;
 
 class LoginAction extends AbstractAction
 {
-    public function __invoke(Request $request, Response $response, $args): Response
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
+     *
+     * @return Response
+     */
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         if (true === $this->isLoggedIn()) {
             return $response->withStatus(403)->withHeader('Location', '/');
@@ -43,6 +50,12 @@ class LoginAction extends AbstractAction
         return $response->withStatus(302)->withHeader('Location', '/');
     }
 
+    /**
+     * @param array $userData
+     * @param array $requestData
+     *
+     * @return boolean
+     */
     private function validate(array $userData, array $requestData) : bool
     {
         if (null === $userData['id']) {

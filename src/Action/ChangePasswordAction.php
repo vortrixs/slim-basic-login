@@ -11,7 +11,14 @@ use Slim\Psr7\Response;
 
 class ChangePasswordAction extends AbstractAction
 {
-    public function __invoke(Request $request, Response $response, $args): Response
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
+     *
+     * @return Response
+     */
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         if (false === $this->isLoggedIn() || false === $this->isOwner($args)) {
             return $response->withStatus(403)->withHeader('Location', '/');
@@ -26,6 +33,12 @@ class ChangePasswordAction extends AbstractAction
         return $response;
     }
 
+    /**
+     * @param Response $response
+     * @param array    $args
+     *
+     * @return Response
+     */
     private function get(Response $response, array $args) : Response
     {
         $response->getBody()->write(
@@ -36,6 +49,13 @@ class ChangePasswordAction extends AbstractAction
         return $response;
     }
 
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
+     *
+     * @return Response
+     */
     private function post(Request $request, Response $response, array $args) : Response
     {
         $data = $request->getParsedBody();

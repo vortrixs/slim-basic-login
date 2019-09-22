@@ -6,14 +6,35 @@ use SBL\Library\AbstractModel;
 
 class UserModel extends AbstractModel
 {
+    /**
+     * @var integer
+     */
     private $id;
+
+    /**
+     * @var boolean
+     */
     private $isAdmin;
+
+    /**
+     * @var string
+     */
     private $username;
+
+    /**
+     * @var string
+     */
     private $password;
 
+    /**
+     * @param string $username
+     * @param string $password
+     *
+     * @return UserModel|boolean
+     */
     public function createUser(string $username, string $password)
     {
-        $isNew = ! (bool) $this->crud->read('id', [['WHERE', 'username', '=', $username]], 1);
+        $isNew = ! (bool) $this->crud->read(['id'], [['WHERE', 'username', '=', $username]], 1);
 
         if (false === $isNew) {
             return false;
@@ -32,6 +53,11 @@ class UserModel extends AbstractModel
         return $this;
     }
 
+    /**
+     * @param string $username
+     *
+     * @return UserModel
+     */
     public function getUser(string $username) : UserModel
     {
         $data = $this->crud->read(['*'], [['WHERE', 'username', '=', $username]], 1);
@@ -48,6 +74,9 @@ class UserModel extends AbstractModel
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getData() : array
     {
         return [
@@ -58,6 +87,9 @@ class UserModel extends AbstractModel
         ];
     }
 
+    /**
+     * @return \Generator
+     */
     public function getAll() : \Generator
     {
         $data = $this->crud->read(['username']);
@@ -69,6 +101,11 @@ class UserModel extends AbstractModel
         }
     }
 
+    /**
+     * @param string $newPassword
+     *
+     * @return integer
+     */
     public function changePassword(string $newPassword) : int
     {
         return $this->crud->update(
@@ -77,11 +114,19 @@ class UserModel extends AbstractModel
         );
     }
 
+    /**
+     * @param integer $access
+     *
+     * @return integer
+     */
     public function changeAdminAccess(int $access) : int
     {
         return $this->crud->update(['is_admin' => $access], [['WHERE', 'username', '=', $this->username]]);
     }
 
+    /**
+     * @return boolean
+     */
     public function deleteUser() : bool
     {
         return $this->crud->delete([['WHERE', 'username', '=', $this->username]]);

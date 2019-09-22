@@ -6,5 +6,4 @@ use SBL\Library\AbstractView;
 
 class ChangePasswordView extends AbstractView
 {
-
 }

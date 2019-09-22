@@ -10,7 +10,14 @@ use Slim\Psr7\Response;
 
 class SignupAction extends AbstractAction
 {
-    public function __invoke(Request $request, Response $response, $args): Response
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
+     *
+     * @return Response
+     */
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         if (true === $this->isLoggedIn()) {
             return $response->withStatus(403)->withHeader('Location', '/');
