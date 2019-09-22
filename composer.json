@@ -4,6 +4,7 @@
     "require": {
         "slim/slim-skeleton": "^4.0",
         "middlewares/trailing-slash": "^1.1.0",
+        "PHP": "~7.2",
         "ext-pdo": "*"
     },
     "authors": [
