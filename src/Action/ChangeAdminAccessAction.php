@@ -5,15 +5,12 @@ namespace SBL\Action;
 
 use SBL\Library\AbstractAction;
 use SBL\Library\Crud;
-use SBL\Library\Traits\LoginRequired;
 use SBL\Model\UserModel;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
 class ChangeAdminAccessAction extends AbstractAction
 {
-    use LoginRequired;
-
     public function __invoke(Request $request, Response $response, $args) : Response
     {
         if (false === $this->isLoggedIn()) {

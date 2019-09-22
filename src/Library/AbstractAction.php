@@ -3,6 +3,8 @@
 namespace SBL\Library;
 
 use Psr\Container\ContainerInterface;
+use SBL\Library\Traits\LoginRequired;
+use SBL\Library\Traits\Permissions;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
@@ -11,6 +13,9 @@ abstract class AbstractAction
     protected $container;
 
     protected $session;
+
+    use LoginRequired;
+    use Permissions;
 
     public function __construct(ContainerInterface $container)
     {

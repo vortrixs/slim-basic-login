@@ -4,15 +4,12 @@
 namespace SBL\Action;
 
 use SBL\Library\AbstractAction;
-use SBL\Library\Traits\LoginRequired;
 use SBL\View\SignupView;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
 class SignupAction extends AbstractAction
 {
-    use LoginRequired;
-
     public function __invoke(Request $request, Response $response, $args): Response
     {
         if (true === $this->isLoggedIn()) {
