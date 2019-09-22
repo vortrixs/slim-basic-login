@@ -60,9 +60,7 @@ class ChangePasswordAction extends AbstractAction
     {
         $data = $request->getParsedBody();
 
-        if ($data['password'] !== $data['password2']) {
-            $this->session->set('sbl.user.update.failed', 'Password and Repeat password must match each other.');
-
+        if (false === $this->validate($data)) {
             return $response->withStatus(302)->withHeader('Location', "/user/{$args['username']}/changepassword");
         }
 
@@ -83,5 +81,22 @@ class ChangePasswordAction extends AbstractAction
         );
 
         return $response->withStatus(302)->withHeader('Location', '/');
+    }
+
+    private function validate(array $data) : bool
+    {
+        if (true === empty($data['password'])) {
+            $this->session->set('sbl.user.update.failed', 'Password cannot be empty.');
+
+            return false;
+        }
+
+        if ($data['password'] !== $data['password2']) {
+            $this->session->set('sbl.user.update.failed', 'Password and Repeat password must match each other.');
+            
+            return false;
+        }
+
+        return true;
     }
 }

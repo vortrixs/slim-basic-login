@@ -24,6 +24,10 @@ trait Permissions
 
         $user = unserialize(base64_decode($this->session->get('sbl.user.current')));
 
+        if (true === $user['isAdmin']) {
+            return true;
+        }
+
         return $user['username'] === $args['username'];
     }
 }
