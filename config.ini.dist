@@ -1,0 +1,3 @@
+DSN="mysql:dbname=;host="
+USER=null
+PASSWD=null
